@@ -1,12 +1,12 @@
 module.exports = async data => {
   if (data === undefined || data === null) {
     throw new Error(
-      "This function requires the json response from Textract as its input..."
+      'This function requires the json response from Textract as its input...'
     );
   }
 
   // GET ALL WORD BLOCKS
-  const getAllWords = data.Blocks.filter(word => word.BlockType === "WORD");
+  const getAllWords = data.Blocks.filter(word => word.BlockType === 'WORD');
 
   const getWords = childIds => {
     return childIds.Ids.map(id => {
@@ -19,7 +19,7 @@ module.exports = async data => {
   const buildWords = words => {
     return words.reduce((fullKey, word) => {
       return `${fullKey} ${word[0].Text}`.trim();
-    }, "");
+    }, '');
   };
 
   const getFormData = options => {
@@ -27,7 +27,7 @@ module.exports = async data => {
       // GET ALL KEY-VALUE BLOCKS WITH ENTITY OF "KEY"
       const keyValueSet = data.Blocks.filter(
         kvp =>
-          kvp.BlockType === "KEY_VALUE_SET" &&
+          kvp.BlockType === 'KEY_VALUE_SET' &&
           kvp.Confidence >
             (options && options.minConfidence ? options.minConfidence : 0)
       );
@@ -36,7 +36,7 @@ module.exports = async data => {
       // Get the words that corresponds to the value
       const getValueForKey = Id => {
         const valuesFromKeyValueSet = keyValueSet.filter(
-          key => key.EntityTypes[0] === "VALUE"
+          key => key.EntityTypes[0] === 'VALUE'
         );
         const valueIds = valuesFromKeyValueSet.filter(
           value => value.Id === Id[0]
@@ -58,7 +58,7 @@ module.exports = async data => {
 
       const getKeys = () => {
         // Filter on all the keys to find text for the key.
-        const keys = keyValueSet.filter(key => key.EntityTypes[0] === "KEY");
+        const keys = keyValueSet.filter(key => key.EntityTypes[0] === 'KEY');
         // Return the key relationships
         const keyRelationships = keys.map(key => key.Relationships);
         // For each id in the child relationships go get the words
@@ -90,7 +90,7 @@ module.exports = async data => {
       // GET ALL LINE BLOCKS
       const lines = data.Blocks.filter(
         line =>
-          line.BlockType === "LINE" &&
+          line.BlockType === 'LINE' &&
           line.Confidence >
             (options && options.minConfidence ? options.minConfidence : 0)
       );
@@ -106,12 +106,12 @@ module.exports = async data => {
       // GET ALL TABLE BLOCKS
       const tables = data.Blocks.filter(
         table =>
-          table.BlockType === "TABLE" &&
+          table.BlockType === 'TABLE' &&
           table.Confidence >
             (options && options.minConfidence ? options.minConfidence : 0)
       );
       // GET ALL CELL BLOCKS
-      const cells = data.Blocks.filter(cell => cell.BlockType === "CELL");
+      const cells = data.Blocks.filter(cell => cell.BlockType === 'CELL');
 
       const getCells = id => {
         return cells.filter(cell => cell.Id === id);
@@ -136,7 +136,7 @@ module.exports = async data => {
                 cellArray.push(completedWord);
               });
             } else {
-              cellArray.push("NA");
+              cellArray.push('NA');
             }
           });
         });

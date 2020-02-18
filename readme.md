@@ -58,5 +58,4 @@ aws.config.update({
   }
 })();
 ```
-# aws-textract-json-parser
 

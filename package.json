@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snymanje/AWSTextractDemo.git"
+    "url": "git+https://github.com/snymanje/aws-textract-json-parser.git"
   },
   "keywords": [
     "aws",
@@ -18,9 +18,9 @@
   "author": "Jean Snyman",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/snymanje/AWSTextractDemo/issues"
+    "url": "https://github.com/snymanje/aws-textract-json-parser/issues"
   },
-  "homepage": "https://github.com/snymanje/AWSTextractDemo#readme",
+  "homepage": "https://github.com/snymanje/aws-textract-json-parser/issues#readme",
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",

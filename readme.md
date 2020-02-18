@@ -10,7 +10,7 @@ This library parses the json response from AWS Textract into a more usable forma
 
 ## Basics
 
-Once you have passed in the response from AWS Textract into the parser, you can call 3 different functions, **_\_getTableData_**, **_getFormData_** and **_getRawData_**. You can also add an optional object specifying the minimum confidence level, default is set to 0.
+Once you have passed in the response from AWS Textract into the parser, you can call 3 different functions, **getTableData**, **getFormData** and **getRawData**. You can also add an optional object specifying the minimum confidence level, default is set to 0.
 
 ```javascript
 const aws = require('aws-sdk');

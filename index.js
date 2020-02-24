@@ -1,3 +1,4 @@
+// @ts-check
 module.exports = async data => {
   if (data === undefined || data === null) {
     throw new Error(

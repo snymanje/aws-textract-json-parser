@@ -1,6 +1,6 @@
 {
   "name": "aws-textract-json-parser",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This library parses the json response from AWS Textract into a more usable format.",
   "main": "index.js",
   "scripts": {

@@ -9,6 +9,11 @@ module.exports = async data => {
   // GET ALL WORD BLOCKS
   const getAllWords = data.Blocks.filter(word => word.BlockType === 'WORD');
 
+  // GET ALL SELECTS BLOCKS
+  const getAllSelects = data.Blocks.filter(
+    select => select.BlockType === 'SELECTION_ELEMENT'
+  );
+
   const getWords = childIds => {
     return childIds.Ids.map(id => {
       return getAllWords.filter(word => {
@@ -17,9 +22,17 @@ module.exports = async data => {
     });
   };
 
+  const getSelects = childIds => {
+    return childIds.Ids.map(id => {
+      return getAllSelects.filter(word => {
+        return word.Id === id;
+      });
+    });
+  };
+
   const buildWords = words => {
-    return words.reduce((fullKey, word) => {
-      return `${fullKey} ${word[0].Text}`.trim();
+    return words.reduce((fullKey, [word]) => {
+      return `${fullKey} ${word.Text}`.trim();
     }, '');
   };
 
@@ -35,13 +48,11 @@ module.exports = async data => {
 
       const forms = [];
       // Get the words that corresponds to the value
-      const getValueForKey = Id => {
+      const getValueForKey = ([Id]) => {
         const valuesFromKeyValueSet = keyValueSet.filter(
           key => key.EntityTypes[0] === 'VALUE'
         );
-        const valueIds = valuesFromKeyValueSet.filter(
-          value => value.Id === Id[0]
-        );
+        const valueIds = valuesFromKeyValueSet.filter(value => value.Id === Id);
 
         const valueRelationships = valueIds.map(valueId => {
           const relationship = valueId.Relationships;
@@ -51,6 +62,10 @@ module.exports = async data => {
         return valueRelationships.map(child => {
           if (child !== undefined) {
             const words = getWords(child);
+            const [[selects]] = getSelects(child);
+            if (selects) {
+              return selects.SelectionStatus;
+            }
             const completedWord = buildWords(words);
             return completedWord;
           }
@@ -120,10 +135,10 @@ module.exports = async data => {
 
       const allTables = [];
       tables.forEach(table => {
-        const tableRelationshipIds = table.Relationships.map(rel => rel.Ids);
+        const [tableRelationshipIds] = table.Relationships.map(rel => rel.Ids);
         const cellArray = [];
         let tableCells = null;
-        tableRelationshipIds.flat().forEach(tableRelationshipId => {
+        tableRelationshipIds.forEach(tableRelationshipId => {
           tableCells = getCells(tableRelationshipId);
 
           tableCells.forEach(tableCell => {
@@ -133,8 +148,13 @@ module.exports = async data => {
               cellIds.forEach(child => {
                 const words = getWords(child);
                 // Using reduce to turn the list of words into one line
-                const completedWord = buildWords(words);
-                cellArray.push(completedWord);
+                const [[selects]] = getSelects(child);
+                if (selects) {
+                  cellArray.push(selects.SelectionStatus);
+                } else {
+                  const completedWord = buildWords(words);
+                  cellArray.push(completedWord);
+                }
               });
             } else {
               cellArray.push('NA');

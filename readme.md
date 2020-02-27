@@ -3,6 +3,7 @@
 This library parses the json response from AWS Textract into a more usable format.
 
 > Selection elements now included.
+> Minimum Node version 10.1+
 
 ## Installation
 

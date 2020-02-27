@@ -2,8 +2,7 @@
 
 This library parses the json response from AWS Textract into a more usable format.
 
-> Selection elements is currently not included, but will be added soon.  
-> Requires Node version 12.4+
+> Selection elements now included.
 
 ## Installation
 
@@ -30,7 +29,7 @@ aws.config.update({
   try {
     const textract = new aws.Textract();
     const dectectText = textract.getDocumentAnalysis({
-      JobId: 'JobId from startDocumentAnalysis goes here...s'
+      JobId: 'JobId from startDocumentAnalysis goes here...'
     });
     const response = await dectectText.promise();
 

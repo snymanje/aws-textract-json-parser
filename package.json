@@ -4,7 +4,7 @@
   "description": "This library parses the json response from AWS Textract into a more usable format.",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": "^1.19.1"
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "@types/jest": "^25.1.3"
   }
 }

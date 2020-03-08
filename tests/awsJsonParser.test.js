@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const json = require('./apiResponse3.json');
+const json = require('./apiResponse.json');
 const awsJsonParser = require('../index');
 
 describe('Raw Data', () => {

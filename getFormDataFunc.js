@@ -2,6 +2,7 @@ const utilFuncs = require('./utilityFuncs');
 
 module.exports = data => {
   const util = utilFuncs(data)();
+
   return options => {
     try {
       // GET ALL KEY-VALUE BLOCKS WITH ENTITY OF "KEY"

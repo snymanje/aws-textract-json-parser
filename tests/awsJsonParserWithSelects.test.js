@@ -6,7 +6,6 @@ describe('Selection Elements', () => {
   it('"MasterCard" should be SELECTED', async () => {
     const data = await awsJsonParser(json);
     const [resultSize] = data.getFormData();
-    console.log(resultSize);
     expect(resultSize.MasterCard).toBe('SELECTED');
   });
 

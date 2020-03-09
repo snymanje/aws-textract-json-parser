@@ -54,8 +54,8 @@ module.exports = data => {
           const words = utils.getWords(value);
           // Using reduce to turn the list of words into one line
           const completedWord = utils.buildWords(words);
-          const keyValue = getValueForKey(Ids);
-          forms.push([completedWord, keyValue[0]]);
+          const { 0: keyValue } = getValueForKey(Ids);
+          forms.push([completedWord, keyValue]);
         });
 
         // Convert vertical array of data into an object

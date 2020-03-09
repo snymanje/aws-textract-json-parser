@@ -12,10 +12,10 @@ module.exports = data => {
             (options && options.minConfidence ? options.minConfidence : 0)
       );
       // GET ALL CELL BLOCKS
-      const cells = data.Blocks.filter(cell => cell.BlockType === 'CELL');
-
       const getCells = id => {
-        return cells.filter(cell => cell.Id === id);
+        return data.Blocks.filter(cells => cells.BlockType === 'CELL').filter(
+          cell => cell.Id === id
+        );
       };
 
       const allTables = [];

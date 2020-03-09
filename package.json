@@ -4,7 +4,7 @@
   "description": "This library parses the json response from AWS Textract into a more usable format.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --verbose --coverage"
   },
   "repository": {
     "type": "git",

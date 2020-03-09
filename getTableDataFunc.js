@@ -1,7 +1,7 @@
 const utilFuncs = require('./utilityFuncs');
 
 module.exports = data => {
-  const util = utilFuncs(data)();
+  const utils = utilFuncs(data)();
   return options => {
     try {
       // GET ALL TABLE BLOCKS
@@ -31,13 +31,13 @@ module.exports = data => {
             // For each id in the child relationships go get the words
             if (cellIds) {
               cellIds.forEach(child => {
-                const words = util.getWords(child);
+                const words = utils.getWords(child);
                 // Using reduce to turn the list of words into one line
-                const [[selects]] = util.getSelects(child);
+                const [[selects]] = utils.getSelects(child);
                 if (selects) {
                   cellArray.push(selects.SelectionStatus);
                 } else {
-                  const completedWord = util.buildWords(words);
+                  const completedWord = utils.buildWords(words);
                   cellArray.push(completedWord);
                 }
               });

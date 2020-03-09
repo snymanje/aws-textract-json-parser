@@ -1,7 +1,7 @@
 const utilFuncs = require('./utilityFuncs');
 
 module.exports = data => {
-  const util = utilFuncs(data)();
+  const utils = utilFuncs(data)();
 
   return options => {
     try {
@@ -21,22 +21,26 @@ module.exports = data => {
         );
         const valueIds = valuesFromKeyValueSet.filter(value => value.Id === Id);
 
-        const valueRelationships = valueIds.map(valueId => {
+        const valueRelationships = valueIds.reduce((result, valueId) => {
           const relationship = valueId.Relationships;
-          if (relationship !== undefined) return relationship[0];
-        });
+          // console.log(relationship);
+          if (relationship !== undefined) result.push(relationship[0]);
+          return result;
+        }, []);
 
-        return valueRelationships.map(child => {
+        return valueRelationships.reduce((result, child) => {
           if (child !== undefined) {
-            const words = util.getWords(child);
-            const [[selects]] = util.getSelects(child);
+            const words = utils.getWords(child);
+            const [[selects]] = utils.getSelects(child);
             if (selects) {
-              return selects.SelectionStatus;
+              result.push(selects.SelectionStatus);
+            } else {
+              const completedWord = utils.buildWords(words);
+              result.push(completedWord);
             }
-            const completedWord = util.buildWords(words);
-            return completedWord;
           }
-        });
+          return result;
+        }, []);
       };
 
       const getKeys = () => {
@@ -46,9 +50,9 @@ module.exports = data => {
         const keyRelationships = keys.map(key => key.Relationships);
         // For each id in the child relationships go get the words
         keyRelationships.forEach(child => {
-          const words = util.getWords(child[1]);
+          const words = utils.getWords(child[1]);
           // Using reduce to turn the list of words into one line
-          const completedWord = util.buildWords(words);
+          const completedWord = utils.buildWords(words);
           const keyValue = getValueForKey(child[0].Ids);
           forms.push([completedWord, keyValue[0]]);
         });

@@ -5,7 +5,7 @@ const awsJsonParser = require('../index');
 describe('Selection Elements', () => {
   it('"MasterCard" should be SELECTED', async () => {
     const data = await awsJsonParser(json);
-    const [resultSize] = data.getFormData();
+    const [resultSize] = data.getFormData({ minConfidence: 0 });
     expect(resultSize).toHaveProperty('MasterCard', 'SELECTED');
   });
 

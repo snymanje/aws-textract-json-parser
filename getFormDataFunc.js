@@ -16,14 +16,12 @@ module.exports = data => {
       const forms = [];
       // Get the words that corresponds to the value
       const getValueForKey = ([Id]) => {
-        const valuesFromKeyValueSet = keyValueSet.filter(
-          key => key.EntityTypes[0] === 'VALUE'
-        );
-        const valueIds = valuesFromKeyValueSet.filter(value => value.Id === Id);
+        const valueIds = keyValueSet
+          .filter(key => key.EntityTypes[0] === 'VALUE')
+          .filter(value => value.Id === Id);
 
         const valueRelationships = valueIds.reduce((result, valueId) => {
           const relationship = valueId.Relationships;
-          // console.log(relationship);
           if (relationship !== undefined) result.push(relationship[0]);
           return result;
         }, []);
@@ -44,16 +42,19 @@ module.exports = data => {
       };
 
       const getKeys = () => {
-        // Filter on all the keys to find text for the key.
-        const keys = keyValueSet.filter(key => key.EntityTypes[0] === 'KEY');
-        // Return the key relationships
-        const keyRelationships = keys.map(key => key.Relationships);
+        // Filter on all the keys to find text for the key and return the key relationships
+        const keyRelationships = keyValueSet
+          .filter(key => key.EntityTypes[0] === 'KEY')
+          .map(key => key.Relationships);
+
         // For each id in the child relationships go get the words
         keyRelationships.forEach(child => {
-          const words = utils.getWords(child[1]);
+          const { Ids } = child[0];
+          const value = child[1];
+          const words = utils.getWords(value);
           // Using reduce to turn the list of words into one line
           const completedWord = utils.buildWords(words);
-          const keyValue = getValueForKey(child[0].Ids);
+          const keyValue = getValueForKey(Ids);
           forms.push([completedWord, keyValue[0]]);
         });
 

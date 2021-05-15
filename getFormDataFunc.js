@@ -22,7 +22,7 @@ module.exports = data => {
 
         const valueRelationships = valueIds.reduce((result, valueId) => {
           const relationship = valueId.Relationships;
-          if (relationship !== undefined) result.push(relationship[0]);
+          if (relationship !== undefined && relationship !== null) result.push(relationship[0]);
           return result;
         }, []);
 

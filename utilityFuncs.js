@@ -26,6 +26,7 @@ module.exports = data => {
 
     const buildWords = (words = []) => {
       return words.reduce((fullKey, [word]) => {
+        if (!word) return fullKey;
         return `${fullKey} ${(word || {Text: ''}).Text}`.trim();
       }, '');
     };

@@ -8,7 +8,7 @@ module.exports = data => {
       select => select.BlockType === 'SELECTION_ELEMENT'
     );
 
-    const getWords = childIds => {
+    const getWords = (childIds = {Ids: []}) => {
       return childIds.Ids.map(id => {
         return getAllWords.filter(word => {
           return word.Id === id;
@@ -16,7 +16,7 @@ module.exports = data => {
       });
     };
 
-    const getSelects = childIds => {
+    const getSelects = (childIds = {Ids: []}) => {
       return childIds.Ids.map(id => {
         return getAllSelects.filter(word => {
           return word.Id === id;
@@ -24,9 +24,10 @@ module.exports = data => {
       });
     };
 
-    const buildWords = words => {
+    const buildWords = (words = []) => {
       return words.reduce((fullKey, [word]) => {
-        return `${fullKey} ${word.Text}`.trim();
+        if (!word) return fullKey;
+        return `${fullKey} ${(word || {Text: ''}).Text}`.trim();
       }, '');
     };
 
